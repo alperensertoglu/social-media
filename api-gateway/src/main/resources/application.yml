@@ -24,12 +24,20 @@ spring:
           uri: http://localhost:7071        #localhost:7071/api/v1/auth/find_all
           filters:
             - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
+            - name: CircuitBreaker
+              args:
+                enabled: true
+                fallbackUri: forward:/fallback/auth_service # sayfa yanıt vermezse buraya forward et diyoruz.
         - id: user-service
           predicates:
             - Path=/user/**
           uri: http://localhost:7072
           filters:
             - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
+            - name: CircuitBreaker
+              args:
+                enabled: true
+                fallbackUri: forward:/fallback/auth_service # sayfa yanıt vermezse buraya forward et diyoruz.
       default-filters:
         - RewritePath= /(?<segment>.*),/api/v1/$\{segment}
 
