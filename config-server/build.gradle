@@ -1,0 +1,5 @@
+dependencies {
+    implementation libs.springCloudConfigStarter
+    implementation libs.springCloudConfigServer
+}
+// Server ve Starter buraya Client genel build.gradle a
